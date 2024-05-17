@@ -123,7 +123,7 @@ function App() {
       </div>
 
       <div className={styleSheet.radioAndCheckBox}>
-        <label htmlFor="Branch">
+        <label htmlFor="Branch" className={styleSheet.label}> Branch: </label>
           CSE
           <input
             type="radio"
@@ -134,8 +134,8 @@ function App() {
             onChange={() => setBranch("CSE")}
             className={styleSheet.radioAndCheckBox}
           />
-        </label>
-        <label htmlFor="Branch">
+       
+       
           ECE
           <input
             type="radio"
@@ -146,8 +146,8 @@ function App() {
             onChange={() => setBranch("ECE")}
             className={styleSheet.radioAndCheckBox}
           />
-        </label>
-        <label htmlFor="Branch">
+      
+       
           EE
           <input
             type="radio"
@@ -158,10 +158,10 @@ function App() {
             onChange={() => setBranch("EE")}
             className={styleSheet.radioAndCheckBox}
           />
-        </label>
+        
       </div>
       <form>
-        <label htmlFor="URL"> URL </label>
+        <label htmlFor="URL" className={styleSheet.label}> URL: </label>
         <input
           type="url"
           className={styleSheet.input}
