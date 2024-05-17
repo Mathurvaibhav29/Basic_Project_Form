@@ -22,7 +22,23 @@ function App() {
   const [gender, setGender] = useState("Male");
   const [branch, setBranch] = useState("CSE");
   const [selectedOption, setSelectedOption] = useState("");
-
+  let handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(firstName,lastName,email,mobile,url,about,gender,branch,selectedOption)
+  };
+  let handleReset=()=>{
+    
+      setFirstName('')
+      setLastName('')
+      setEmail('');
+      setMobile('');
+      setUrl('');
+      setGender('Male');
+      setBranch('CSE');
+      setSelectedOption('');
+      setAbout('')
+    
+  }
   return (
     <div className={styleSheet.mainDiv}>
       <h1 className={styleSheet.heading}>Form Submission</h1>
@@ -107,7 +123,7 @@ function App() {
       </div>
 
       <div className={styleSheet.radioAndCheckBox}>
-        <label htmlFor="Branch" >
+        <label htmlFor="Branch">
           CSE
           <input
             type="radio"
@@ -163,14 +179,15 @@ function App() {
           id="TechStack"
           placeholder="Choose Below"
           value={selectedOption}
+          onChange={(event) => setSelectedOption(event.target.value)}
         >
-          <option value="" disabled selected={selectedOption === ""}>
+          <option value="" disabled >
             Choose Below
           </option>
 
-          <option value="1">MERN</option>
-          <option value="2">MEAN</option>
-          <option value="3">Data Science</option>
+          <option value="MERN">MERN</option>
+          <option value="MEAN">MEAN</option>
+          <option value="DSC">Data Science</option>
         </select>
       </div>
 
@@ -179,6 +196,7 @@ function App() {
           About Yourself:
         </label>
         <textarea
+        type="text"
           className={styleSheet.input}
           placeholder="Write About yourself"
           value={about}
@@ -186,8 +204,10 @@ function App() {
         ></textarea>
       </div>
 
-      <button className={styleSheet.button}>Submit</button>
-      <button className={styleSheet.button}>RESET</button>
+      <button className={styleSheet.button} onClick={(event)=>handleSubmit(event)}>
+        Submit
+      </button>
+      <button className={styleSheet.button} onClick={()=>handleReset()}>RESET</button>
     </div>
   );
 }
