@@ -1,6 +1,10 @@
+
+
+
+
 const validateDetails=(mobile,firstName)=>{
     if(mobile.length>10){
-        alert('Enter Valid number')
+        alert('Enter valid number')
     }
     if(!firstName){
         alert('Enter First Name')

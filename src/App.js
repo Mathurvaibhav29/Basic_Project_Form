@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
-import validateDetails from "./validation"
+
+import WarningModal from "./WarningModal.js";
 const styleSheet = {
   mainDiv:
     "bg-white rounded-2xl shadow-2xl py-2.5 px-5 transition-transform duration-200 w-96 text-center mx-auto mt-5",
@@ -24,11 +25,19 @@ function App() {
   const [gender, setGender] = useState("Male");
   const [branch, setBranch] = useState("CSE");
   const [selectedOption, setSelectedOption] = useState("");
-
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const openModal=()=>{
+    setModalIsOpen(true)
+  }
+  const closeModal=()=>{
+    setModalIsOpen(false)
+  }
   let handleSubmit = (event) => {
     event.preventDefault();
-    validateDetails(mobile,firstName)
-    
+    if(!firstName){
+      openModal()
+      return;
+    }
     const user = {
       firstName: firstName,
       lastName: lastName,
@@ -220,6 +229,7 @@ function App() {
           RESET
         </button>
       </form>
+      <WarningModal isOpen={modalIsOpen} onRequestClose={closeModal}/>
     </div>
   );
 }
