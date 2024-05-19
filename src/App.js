@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-
+import validateDetails from "./validation"
 const styleSheet = {
   mainDiv:
     "bg-white rounded-2xl shadow-2xl py-2.5 px-5 transition-transform duration-200 w-96 text-center mx-auto mt-5",
@@ -27,18 +27,8 @@ function App() {
 
   let handleSubmit = (event) => {
     event.preventDefault();
-    console.log(
-      firstName,
-      lastName,
-      email,
-      mobile,
-      url,
-      about,
-      gender,
-      branch,
-      selectedOption
-    );
-
+    validateDetails(mobile,firstName)
+    
     const user = {
       firstName: firstName,
       lastName: lastName,
@@ -155,7 +145,7 @@ function App() {
             onChange={() => setBranch("CSE")}
             className={styleSheet.radioAndCheckBox}
           />
-         ECE
+          ECE
           <input
             type="radio"
             name="Branch"
@@ -165,7 +155,7 @@ function App() {
             onChange={() => setBranch("ECE")}
             className={styleSheet.radioAndCheckBox}
           />
-           EE
+          EE
           <input
             type="radio"
             name="Branch"
@@ -175,8 +165,6 @@ function App() {
             onChange={() => setBranch("EE")}
             className={styleSheet.radioAndCheckBox}
           />
-         
-
         </div>
 
         <label htmlFor="URL" className={styleSheet.label}>
@@ -224,7 +212,11 @@ function App() {
         <button type="submit" className={styleSheet.button}>
           Submit
         </button>
-        <button type="button" className={styleSheet.button} onClick={handleReset}>
+        <button
+          type="button"
+          className={styleSheet.button}
+          onClick={handleReset}
+        >
           RESET
         </button>
       </form>
