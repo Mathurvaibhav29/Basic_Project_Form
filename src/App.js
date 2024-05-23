@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 
-import WarningModal from "./WarningModal.js";
+import ModalAdvance from "./ModalAdvance.js";
 const styleSheet = {
   mainDiv:
     "bg-white rounded-2xl shadow-2xl py-2.5 px-5 transition-transform duration-200 w-96 text-center mx-auto mt-5",
@@ -14,7 +14,8 @@ const styleSheet = {
   button:
     "p-4 rounded-2xl m-4 border-none text-white bg-sky-700 w-3/12 text-base",
 };
-
+let missingEntry;
+let missingData;
 function App() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -24,20 +25,37 @@ function App() {
   const [about, setAbout] = useState("");
   const [gender, setGender] = useState("Male");
   const [branch, setBranch] = useState("CSE");
-  const [selectedOption, setSelectedOption] = useState("");
+  const [stack, setStack] = useState("");
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const openModal=()=>{
-    setModalIsOpen(true)
-  }
-  const closeModal=()=>{
-    setModalIsOpen(false)
-  }
+
+  const missingDataFinder = (user) => {
+    const userLength = Object.keys(user).length;
+    const values = Object.values(user);
+    const keys = Object.keys(user);
+   
+    for (let i = 0; i < userLength; i++) {
+      if (
+        values[i] === "" ||
+        values[i] === " " ||
+        values[i] === null ||
+        values[i] === undefined
+      ) {
+        missingData = keys[i];
+      }
+    }
+    console.log(missingData + " " + "is not entered by user");
+    return missingData;
+  };
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
   let handleSubmit = (event) => {
     event.preventDefault();
-    if(!firstName){
-      openModal()
-      return;
-    }
+
     const user = {
       firstName: firstName,
       lastName: lastName,
@@ -47,9 +65,16 @@ function App() {
       about: about,
       gender: gender,
       branch: branch,
-      selectedOption: selectedOption,
+      stack:stack
     };
+    missingEntry = missingDataFinder(user);
+    if (missingEntry) {
+      openModal();
+      return;
+    }
     localStorage.setItem("user", JSON.stringify(user));
+
+    handleReset();
   };
 
   let handleReset = () => {
@@ -61,7 +86,7 @@ function App() {
     setAbout("");
     setGender("Male");
     setBranch("CSE");
-    setSelectedOption("");
+    setStack("");
   };
 
   return (
@@ -189,13 +214,13 @@ function App() {
           onChange={(event) => setUrl(event.target.value)}
         />
 
-        <div>
+<div>
           <label className={styleSheet.label}>Choose Tech Stack:</label>
           <select
             name="TechStack"
             id="TechStack"
-            value={selectedOption}
-            onChange={(event) => setSelectedOption(event.target.value)}
+            value={setStack}
+            onChange={(event) => setStack(event.target.value)}
             className={styleSheet.input}
           >
             <option value="" disabled>
@@ -229,7 +254,11 @@ function App() {
           RESET
         </button>
       </form>
-      <WarningModal isOpen={modalIsOpen} onRequestClose={closeModal}/>
+      <ModalAdvance
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        missingEntry={missingEntry}
+      />
     </div>
   );
 }
